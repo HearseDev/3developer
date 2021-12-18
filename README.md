@@ -1,2 +1,3 @@
 #3decrypt
-<a href="https://github.io/HearseDev">Repo</a>
+
+<a href="https://hearsedev.github.io">Repo</a>
