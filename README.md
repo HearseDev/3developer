@@ -1,3 +1,6 @@
-#3decrypt
+# 3decrypt
 
-<a href="https://hearsedev.github.io">Repo</a>
+<h3>Speacial Thanks</h3>
+
+<a href="https://github.com/donato-fiore/Cach3D">Fiore</a>
+<a href="https://captinc.me/">CaptInc</a>
