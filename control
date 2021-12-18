@@ -1,0 +1,9 @@
+Package: com.hearse.3decrypt
+Name: 3Decrypt
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: 3D touch action for flexdecrypt
+Maintainer: Hearse
+Author: Hearse
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000), flexdecrypt
