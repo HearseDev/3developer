@@ -1,6 +1,8 @@
 # 3developer by Hearse/<a href="https://github.com/donato-fiore">Fiore</a>
 
 <p>Helpful shortcuts in the 3d touch menu that are specifically made for developers.<p3>
+ 
+<p>Get it here: <a href="https://hearsedev.github.io/">repo</a></p>
   
 <h2>Features</h2>
   
