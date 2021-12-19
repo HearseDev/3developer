@@ -1,7 +1,13 @@
-# 3developer by Hearse/Fiore
+# 3developer by Hearse/<a href="https://github.com/donato-fiore">Fiore</a>
 
-<p>Helpful shortcuts in the 3d touch menu that are specifically made to cater towards developers.<p3>
+<p>Helpful shortcuts in the 3d touch menu that are specifically made for developers.<p3>
+  
+<h2>Features</h2>
+  
+  - Decrypt applications with the help of flexdecrypt
+  - Copy/View bundle id
+  - Open Bundle location in Filza
 
 
 <h3>Special Thanks</h2>
-<a href="">Capt</a> for pointing me in the right direction.
+<a href="https://github.com/captinc">Capt</a> for pointing me in the right direction.
