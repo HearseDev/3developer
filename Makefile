@@ -12,9 +12,7 @@ TWEAK_NAME = 3Developer
 
 3Developer_FILES = Tweak.x
 3Developer_CFLAGS = -fobjc-arc
-3Developer_EXTRA_FRAMEWORKS += Cephei
 3Developer_PRIVATE_FRAMEWORKS = SpringBoardServices
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-SUBPROJECTS += 3developerprefs
 include $(THEOS_MAKE_PATH)/aggregate.mk

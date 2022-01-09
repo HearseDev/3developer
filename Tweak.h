@@ -1,4 +1,3 @@
-#include <Cephei/HBPreferences.h>
 #include "NSTask.h"
 #include <SpringBoard/SBApplication.h>
 #include <SpringBoard/SBApplicationController.h>

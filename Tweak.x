@@ -1,19 +1,12 @@
 #include "Tweak.h"
 
-HBPreferences *preferences;
-BOOL kEnabled;
-BOOL kFlex;
-BOOL kBundleID;
-BOOL kOpenBundleInFilza;
-
 %hook SBIconView
 - (void)setApplicationShortcutItems:(NSArray *)arg1 {
   NSMutableArray *originalItems = [[NSMutableArray alloc] init];
   for (SBSApplicationShortcutItem *item in arg1) {
     [originalItems addObject:item];
   }
-
-  if (kFlex) {
+    //decrypt
     NSData *flexData = UIImagePNGRepresentation(
         [[[UIImage systemImageNamed:@"chevron.left.slash.chevron.right"]
             imageWithTintColor:[UIColor whiteColor]]
@@ -21,53 +14,42 @@ BOOL kOpenBundleInFilza;
     SBSApplicationShortcutItem *flexItem =
         [%c(SBSApplicationShortcutItem) alloc];
     flexItem.localizedTitle = @"Flexdecrypt";
-    SBSApplicationShortcutCustomImageIcon *icon =
+    SBSApplicationShortcutCustomImageIcon *flexIcon =
         [[SBSApplicationShortcutCustomImageIcon alloc]
             initWithImagePNGData:flexData];
-    [flexItem setIcon:icon];
+    [flexItem setIcon:flexIcon];
     flexItem.type = @"com.hearse.3developer.flex";
     [originalItems addObject:flexItem];
-  }
-
-  if (kBundleID) {
-    NSData *bundleData = UIImagePNGRepresentation([[[UIImage
+    //copy bundle id
+    NSData *copyBundleData = UIImagePNGRepresentation([[[UIImage
         systemImageNamed:@"app.badge"] imageWithTintColor:[UIColor whiteColor]]
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
-    SBSApplicationShortcutItem *bundleItem =
+    SBSApplicationShortcutItem *copyBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
-    bundleItem.localizedTitle = @"Copy Bundle ID";
-    bundleItem.localizedSubtitle = self.applicationBundleIdentifierForShortcuts;
-    SBSApplicationShortcutCustomImageIcon *icon =
+    copyBundleItem.localizedTitle = @"Copy Bundle ID";
+    copyBundleItem.localizedSubtitle = self.applicationBundleIdentifierForShortcuts;
+    SBSApplicationShortcutCustomImageIcon *copyBundleIcon =
         [[SBSApplicationShortcutCustomImageIcon alloc]
-            initWithImagePNGData:bundleData];
-    [bundleItem setIcon:icon];
-    bundleItem.type = @"com.hearse.3developer.bundle";
-    [originalItems addObject:bundleItem];
-  }
-  if (kOpenBundleInFilza) {
-    NSData *bundleData = UIImagePNGRepresentation([[[UIImage
+            initWithImagePNGData:copyBundleData];
+    [copyBundleItem setIcon:copyBundleIcon];
+    copyBundleItem.type = @"com.hearse.3developer.bundle";
+    [originalItems addObject:copyBundleItem];
+    //open bundle
+    NSData *openBundleData = UIImagePNGRepresentation([[[UIImage
         systemImageNamed:@"doc.fill"] imageWithTintColor:[UIColor whiteColor]]
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
-    SBSApplicationShortcutItem *bundleItem =
+    SBSApplicationShortcutItem *openBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
-    bundleItem.localizedTitle = @"Open Bundle In Filza";
-    SBSApplicationShortcutCustomImageIcon *icon =
+    openBundleItem.localizedTitle = @"Open Bundle In Filza";
+    SBSApplicationShortcutCustomImageIcon *openBundleIcon =
         [[SBSApplicationShortcutCustomImageIcon alloc]
-            initWithImagePNGData:bundleData];
-    [bundleItem setIcon:icon];
-    bundleItem.type = @"com.hearse.3developer.openBundleInFilza";
-    [originalItems addObject:bundleItem];
-  }
+            initWithImagePNGData:openBundleData];
+    [openBundleItem setIcon:openBundleIcon];
+    openBundleItem.type = @"com.hearse.3developer.openBundleInFilza";
+    [originalItems addObject:openBundleItem];
 
   %orig(originalItems);
 }
-
-/* NSString *pathInFilza = [@"filza://view"
-   stringByAppendingString:applicationProxy.bundleURL.path];
-                [[%c(SpringBoard) sharedApplication]
-   applicationOpenURL:[NSURL URLWithString:[pathInFilza
-   stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet
-   URLQueryAllowedCharacterSet]]]]; return NO; */
 
 + (void)activateShortcut:(SBSApplicationShortcutItem *)item
     withBundleIdentifier:(NSString *)bundleID
@@ -166,18 +148,3 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
   }
 }
 %end
-
-%hook SBHomeScreenViewController
-
-%end
-
-%ctor {
-  preferences =
-      [[HBPreferences alloc] initWithIdentifier:@"com.hearse.3developerprefs"];
-  [preferences registerBool:&kEnabled default:NO forKey:@"kEnabled"];
-  [preferences registerBool:&kFlex default:NO forKey:@"kFlexDecrypt"];
-  [preferences registerBool:&kBundleID default:NO forKey:@"kCopyBundleID"];
-  [preferences registerBool:&kOpenBundleInFilza
-                    default:NO
-                     forKey:@"kOpenBundleInFilza"];
-}
