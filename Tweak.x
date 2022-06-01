@@ -6,10 +6,17 @@
   for (SBSApplicationShortcutItem *item in arg1) {
     [originalItems addObject:item];
   }
+    UIColor *themeColor;
+    if ([UITraitCollection currentTraitCollection].userInterfaceStyle == UIUserInterfaceStyleLight) {
+        themeColor = [UIColor blackColor];
+    }
+    else {
+        themeColor = [UIColor whiteColor];
+    }
     //decrypt
     NSData *flexData = UIImagePNGRepresentation(
         [[[UIImage systemImageNamed:@"chevron.left.slash.chevron.right"]
-            imageWithTintColor:[UIColor whiteColor]]
+            imageWithTintColor:themeColor]
             imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *flexItem =
         [%c(SBSApplicationShortcutItem) alloc];
@@ -22,7 +29,7 @@
     [originalItems addObject:flexItem];
     //copy bundle id
     NSData *copyBundleData = UIImagePNGRepresentation([[[UIImage
-        systemImageNamed:@"app.badge"] imageWithTintColor:[UIColor whiteColor]]
+        systemImageNamed:@"app.badge"] imageWithTintColor:themeColor]
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *copyBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
@@ -36,7 +43,7 @@
     [originalItems addObject:copyBundleItem];
     //open bundle
     NSData *openBundleData = UIImagePNGRepresentation([[[UIImage
-        systemImageNamed:@"doc.fill"] imageWithTintColor:[UIColor whiteColor]]
+        systemImageNamed:@"doc.fill"] imageWithTintColor:themeColor]
         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *openBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
