@@ -6,51 +6,34 @@
   for (SBSApplicationShortcutItem *item in arg1) {
     [originalItems addObject:item];
   }
-    UIColor *themeColor;
-    if ([UITraitCollection currentTraitCollection].userInterfaceStyle == UIUserInterfaceStyleLight) {
-        themeColor = [UIColor blackColor];
-    }
-    else {
-        themeColor = [UIColor whiteColor];
-    }
     //decrypt
-    NSData *flexData = UIImagePNGRepresentation(
-        [[[UIImage systemImageNamed:@"chevron.left.slash.chevron.right"]
-            imageWithTintColor:themeColor]
-            imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *flexItem =
         [%c(SBSApplicationShortcutItem) alloc];
     flexItem.localizedTitle = @"Flexdecrypt";
-    SBSApplicationShortcutCustomImageIcon *flexIcon =
-        [[SBSApplicationShortcutCustomImageIcon alloc]
-            initWithImagePNGData:flexData];
+    SBSApplicationShortcutSystemPrivateIcon *flexIcon =
+        [[SBSApplicationShortcutSystemPrivateIcon alloc]
+            initWithSystemImageName:@"chevron.left.slash.chevron.right"];
     [flexItem setIcon:flexIcon];
     flexItem.type = @"com.hearse.3developer.flex";
     [originalItems addObject:flexItem];
     //copy bundle id
-    NSData *copyBundleData = UIImagePNGRepresentation([[[UIImage
-        systemImageNamed:@"app.badge"] imageWithTintColor:themeColor]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *copyBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
     copyBundleItem.localizedTitle = @"Copy Bundle ID";
     copyBundleItem.localizedSubtitle = self.applicationBundleIdentifierForShortcuts;
-    SBSApplicationShortcutCustomImageIcon *copyBundleIcon =
-        [[SBSApplicationShortcutCustomImageIcon alloc]
-            initWithImagePNGData:copyBundleData];
+    SBSApplicationShortcutSystemPrivateIcon *copyBundleIcon =
+        [[SBSApplicationShortcutSystemPrivateIcon alloc]
+            initWithSystemImageName:@"app.badge"];
     [copyBundleItem setIcon:copyBundleIcon];
     copyBundleItem.type = @"com.hearse.3developer.bundle";
     [originalItems addObject:copyBundleItem];
     //open bundle
-    NSData *openBundleData = UIImagePNGRepresentation([[[UIImage
-        systemImageNamed:@"doc.fill"] imageWithTintColor:themeColor]
-        imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]);
     SBSApplicationShortcutItem *openBundleItem =
         [%c(SBSApplicationShortcutItem) alloc];
     openBundleItem.localizedTitle = @"Open Bundle In Filza";
-    SBSApplicationShortcutCustomImageIcon *openBundleIcon =
-        [[SBSApplicationShortcutCustomImageIcon alloc]
-            initWithImagePNGData:openBundleData];
+    SBSApplicationShortcutSystemPrivateIcon *openBundleIcon =
+        [[SBSApplicationShortcutSystemPrivateIcon alloc]
+            initWithSystemImageName:@"doc.fill"];
     [openBundleItem setIcon:openBundleIcon];
     openBundleItem.type = @"com.hearse.3developer.openBundleInFilza";
     [originalItems addObject:openBundleItem];
