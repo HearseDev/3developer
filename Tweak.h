@@ -29,8 +29,6 @@
 @property (readonly, copy, nonatomic) NSString *applicationBundleIdentifierForShortcuts;
 @end
 
-@interface SBSApplicationShortcutCustomImageIcon : SBSApplicationShortcutIcon
-@property(nonatomic, readwrite) BOOL isTemplate;
-- (id)initWithImagePNGData:(id)arg1;
-- (BOOL)isTemplate;
+@interface SBSApplicationShortcutSystemPrivateIcon : SBSApplicationShortcutIcon
+- (id)initWithSystemImageName:(id)arg1;
 @end
