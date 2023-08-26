@@ -1,18 +1,16 @@
-TARGET := iphone:clang:latest:13.0
+TARGET := iphone:clang:14.5:14.0
 INSTALL_TARGET_PROCESSES = SpringBoard
+SDK_PATH = $(THEOS)/sdks/iPhoneOS14.5.sdk/
+SYSROOT = $(SDK_PATH)
 
-THEOS_DEVICE_IP=10.0.0.131
-THEOS_DEVICE_PORT=2222
-
-ARCHS = arm64 arm64e
 
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = 3Developer
+TWEAK_NAME = 3developer
 
-3Developer_FILES = Tweak.x
-3Developer_CFLAGS = -fobjc-arc
-3Developer_PRIVATE_FRAMEWORKS = SpringBoardServices
+$(TWEAK_NAME)_FILES = $(wildcard src/*.m) $(wildcard src/*.mm) $(wildcard src/*.x) $(wildcard src/*.xm)
+$(TWEAK_NAME)_CFLAGS += -fobjc-arc
+$(TWEAK_NAME)_FRAMEWORKS += Foundation UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 include $(THEOS_MAKE_PATH)/aggregate.mk
