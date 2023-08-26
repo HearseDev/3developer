@@ -220,7 +220,8 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
 %end
 
 %ctor{
-  if ([[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.springboard"]){
-    %init(3D)
-  }
+  // Only inject into springboard, which turns this check redundant.
+  //if ([[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.springboard"]){
+  %init(3D)
+  //}
 }
