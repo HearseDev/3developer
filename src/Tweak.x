@@ -1,6 +1,8 @@
 #import "Tweak.h"
 #include <rootless.h>
 
+
+
 %group 3D
 
 %hook SBIconView
@@ -9,64 +11,73 @@
     %orig(arg1);
     return;
   }
-
+  
+  // Reduces the use of objc_getClass and also if class names ever change in the future.
+  Class ShortcutItemRuntimeClass = objc_getClass("SBSApplicationShortcutItem");
+  Class ShortcutIconRuntimeClass = objc_getClass("SBSApplicationShortcutSystemPrivateIcon");
+  // Realistically this check is not needed.
+  if (!ShortcutItemRuntimeClass || !ShortcutIconRuntimeClass){
+    %orig(arg1);
+    return;
+  }
+  
   NSMutableArray *modifiedItems = (arg1) ? [arg1 mutableCopy] : [NSMutableArray new];
 
-    //decrypt
-    SBSApplicationShortcutItem *flexItem =
-        [%c(SBSApplicationShortcutItem) alloc];
-    flexItem.localizedTitle = @"flexdecrypt";
-    SBSApplicationShortcutSystemPrivateIcon *flexIcon =
-        [[%c(SBSApplicationShortcutSystemPrivateIcon) alloc]
-            initWithSystemImageName:@"chevron.left.slash.chevron.right"];
-    [flexItem setIcon:flexIcon];
-    flexItem.type = FLEX_BUNDLE_ID;
-    //copy bundle id
-    SBSApplicationShortcutItem *copyBundleItem =
-        [%c(SBSApplicationShortcutItem) alloc];
-    copyBundleItem.localizedTitle = @"Copy Bundle ID";
-    copyBundleItem.localizedSubtitle = self.applicationBundleIdentifierForShortcuts;
-    SBSApplicationShortcutSystemPrivateIcon *copyBundleIcon =
-        [[%c(SBSApplicationShortcutSystemPrivateIcon) alloc]
-            initWithSystemImageName:@"app.badge"];
-    [copyBundleItem setIcon:copyBundleIcon];
-    copyBundleItem.type = COPY_BUNDLE_ID;
-    //open bundle
-    SBSApplicationShortcutItem *openBundleItem =
-        [%c(SBSApplicationShortcutItem) alloc];
-    openBundleItem.localizedTitle = @"Open Bundle In Filza";
-    SBSApplicationShortcutSystemPrivateIcon *openBundleIcon =
-        [[%c(SBSApplicationShortcutSystemPrivateIcon) alloc]
-            initWithSystemImageName:@"doc.zipper"];
-    [openBundleItem setIcon:openBundleIcon];
-    openBundleItem.type = OPEN_BUNDLE_IN_FILZA_BUNDLE_ID;
-    //open container
-    SBSApplicationShortcutItem *openContainerItem =
-        [%c(SBSApplicationShortcutItem) alloc];
-    openContainerItem.localizedTitle = @"Open Container In Filza";
-    SBSApplicationShortcutSystemPrivateIcon *openContainerIcon =
-        [[%c(SBSApplicationShortcutSystemPrivateIcon) alloc]
-            initWithSystemImageName:@"doc.fill"];
-    [openContainerItem setIcon:openContainerIcon];
-    openContainerItem.type = OPEN_CONTAINER_IN_FILZA_BUNDLE_ID;
-    //info
-    SBSApplicationShortcutItem *infoItem =
-        [%c(SBSApplicationShortcutItem) alloc];
-    infoItem.localizedTitle = @"Info";
-    SBSApplicationShortcutSystemPrivateIcon *infoIcon =
-        [[%c(SBSApplicationShortcutSystemPrivateIcon) alloc]
-            initWithSystemImageName:@"info"];
-    [infoItem setIcon:infoIcon];
-    infoItem.type = INFO_BUNDLE_ID;
+  //decrypt
+  SBSApplicationShortcutItem *flexItem =
+      [ShortcutItemRuntimeClass alloc];
+  flexItem.localizedTitle = @"flexdecrypt";
+  SBSApplicationShortcutSystemPrivateIcon *flexIcon =
+      [[ShortcutIconRuntimeClass alloc]
+          initWithSystemImageName:@"chevron.left.slash.chevron.right"];
+  [flexItem setIcon:flexIcon];
+  flexItem.type = FLEX_BUNDLE_ID;
 
-    [modifiedItems addObject:flexItem];
-    [modifiedItems addObject:copyBundleItem];
-    [modifiedItems addObject: infoItem];
-    [modifiedItems addObject:openContainerItem];
-    [modifiedItems addObject:openBundleItem];
+  //copy bundle id
+  SBSApplicationShortcutItem *copyBundleItem =
+      [ShortcutItemRuntimeClass alloc];
+  copyBundleItem.localizedTitle = @"Copy Bundle ID";
+  copyBundleItem.localizedSubtitle = self.applicationBundleIdentifierForShortcuts;
+  SBSApplicationShortcutSystemPrivateIcon *copyBundleIcon =
+      [[ShortcutIconRuntimeClass alloc]
+          initWithSystemImageName:@"app.badge"];
+  [copyBundleItem setIcon:copyBundleIcon];
+  copyBundleItem.type = COPY_BUNDLE_ID;
+  //open bundle
+  SBSApplicationShortcutItem *openBundleItem =
+      [ShortcutItemRuntimeClass alloc];
+  openBundleItem.localizedTitle = @"Open Bundle In Filza";
+  SBSApplicationShortcutSystemPrivateIcon *openBundleIcon =
+      [[ShortcutIconRuntimeClass alloc]
+          initWithSystemImageName:@"doc.zipper"];
+  [openBundleItem setIcon:openBundleIcon];
+  openBundleItem.type = OPEN_BUNDLE_IN_FILZA_BUNDLE_ID;
+  //open container
+  SBSApplicationShortcutItem *openContainerItem =
+      [ShortcutItemRuntimeClass alloc];
+  openContainerItem.localizedTitle = @"Open Container In Filza";
+  SBSApplicationShortcutSystemPrivateIcon *openContainerIcon =
+      [[ShortcutIconRuntimeClass alloc]
+          initWithSystemImageName:@"doc.fill"];
+  [openContainerItem setIcon:openContainerIcon];
+  openContainerItem.type = OPEN_CONTAINER_IN_FILZA_BUNDLE_ID;
+  //info
+  SBSApplicationShortcutItem *infoItem =
+      [ShortcutItemRuntimeClass alloc];
+  infoItem.localizedTitle = @"Info";
+  SBSApplicationShortcutSystemPrivateIcon *infoIcon =
+      [[ShortcutIconRuntimeClass alloc]
+          initWithSystemImageName:@"info"];
+  [infoItem setIcon:infoIcon];
+  infoItem.type = INFO_BUNDLE_ID;
 
+  [modifiedItems addObject:flexItem];
+  [modifiedItems addObject:copyBundleItem];
+  [modifiedItems addObject: infoItem];
+  [modifiedItems addObject:openContainerItem];
+  [modifiedItems addObject:openBundleItem];
 
-    %orig(modifiedItems);
+  %orig(modifiedItems);
 }
 
 + (void)activateShortcut:(SBSApplicationShortcutItem *)item
@@ -75,7 +86,7 @@
   if ([[item type] isEqualToString:FLEX_BUNDLE_ID] && bundleID && [bundleID length] != 0) {
 
     FBApplicationInfo *app =
-        (FBApplicationInfo *)[[NSClassFromString(@"SBApplicationController")
+        (FBApplicationInfo *)[[objc_getClass("SBApplicationController")
                                   sharedInstance]
             applicationWithBundleIdentifier:bundleID]
             .info;
@@ -126,7 +137,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
                                           URLQueryAllowedCharacterSet]]];
 
                       NSLog(@"NSLogify |%@|", url);
-                      [[%c(SpringBoard) sharedApplication]
+                      [[objc_getClass("SpringBoard") sharedApplication]
                           applicationOpenURL:url];
                     }];
         [alert addAction:dismissAction];
@@ -150,7 +161,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
 
     @try{
       FBApplicationInfo *app =
-          (FBApplicationInfo *)[[NSClassFromString(@"SBApplicationController")
+          (FBApplicationInfo *)[[objc_getClass("SBApplicationController")
                                     sharedInstance]
               applicationWithBundleIdentifier:bundleID]
               .info;
@@ -161,7 +172,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
                             stringByAddingPercentEncodingWithAllowedCharacters:
                                 [NSCharacterSet URLQueryAllowedCharacterSet]]];
       if (app && url){
-        [[%c(SpringBoard) sharedApplication] applicationOpenURL:url];
+        [[objc_getClass("SpringBoard") sharedApplication] applicationOpenURL:url];
       }
     }@catch(NSException *exception){}
 
@@ -169,7 +180,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
                  isEqualToString:OPEN_CONTAINER_IN_FILZA_BUNDLE_ID] && bundleID && [bundleID length] != 0) {
     @try{
       FBApplicationInfo *app =
-          (FBApplicationInfo *)[[NSClassFromString(@"SBApplicationController")
+          (FBApplicationInfo *)[[objc_getClass("SBApplicationController")
                                     sharedInstance]
               applicationWithBundleIdentifier:bundleID]
               .info;
@@ -180,7 +191,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
                             stringByAddingPercentEncodingWithAllowedCharacters:
                                 [NSCharacterSet URLQueryAllowedCharacterSet]]];
       if (app && url){
-        [[%c(SpringBoard) sharedApplication] applicationOpenURL:url];
+        [[objc_getClass("SpringBoard") sharedApplication] applicationOpenURL:url];
       }
   }@catch(NSException *exception){}
   }else if ([[item type]
@@ -198,7 +209,7 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
     @try{
       if (keyWindow){
         FBApplicationInfo *app =
-          (FBApplicationInfo *)[[NSClassFromString(@"SBApplicationController")
+          (FBApplicationInfo *)[[objc_getClass("SBApplicationController")
                                     sharedInstance]
               applicationWithBundleIdentifier:bundleID]
               .info;
@@ -217,8 +228,5 @@ NSString* trimmedUrlString = [pathInFilza stringByTrimmingCharactersInSet:[NSCha
 %end
 
 %ctor{
-  // Only inject into springboard, which turns this check redundant.
-  //if ([[NSBundle mainBundle].bundleIdentifier isEqualToString:@"com.apple.springboard"]){
   %init(3D)
-  //}
 }

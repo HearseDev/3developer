@@ -16,9 +16,11 @@
   if (!self.textView.text) {
     self.textView.text = @"";
   }
-  self.textView.text =
-      [self.textView.text stringByAppendingFormat:@"%@\n", text];
-  [self.textView sizeToFit];
+  if (text) {
+    self.textView.text =
+        [self.textView.text stringByAppendingFormat:@"%@\n", text];
+    [self.textView sizeToFit];
+  }
 }
 
 - (void)viewDidLoad {
