@@ -1,5 +1,7 @@
 TARGET := iphone:clang:14.5:14.0
 INSTALL_TARGET_PROCESSES = SpringBoard
+
+# Manually specifying to use theos sdks, since we are using private frameworks.
 SDK_PATH = $(THEOS)/sdks/iPhoneOS14.5.sdk/
 SYSROOT = $(SDK_PATH)
 
