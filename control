@@ -1,6 +1,6 @@
 Package: com.hearse.3developer
 Name: 3developer
-Version: 0.0.1
+Version: 0.0.2
 Architecture: iphoneos-arm
 Description: 3D touch menu options for developers.
 Maintainer: Hearse
