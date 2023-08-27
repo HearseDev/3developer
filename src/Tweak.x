@@ -10,11 +10,8 @@
     return;
   }
 
-  NSMutableArray *originalItems = [[NSMutableArray alloc] init];
+  NSMutableArray *modifiedItems = (arg1) ? [arg1 mutableCopy] : [NSMutableArray new];
 
-  for (SBSApplicationShortcutItem *item in arg1) {
-    [originalItems addObject:item];
-  }
     //decrypt
     SBSApplicationShortcutItem *flexItem =
         [%c(SBSApplicationShortcutItem) alloc];
@@ -62,14 +59,14 @@
     [infoItem setIcon:infoIcon];
     infoItem.type = INFO_BUNDLE_ID;
 
-    [originalItems addObject:flexItem];
-    [originalItems addObject:copyBundleItem];
-    [originalItems addObject: infoItem];
-    [originalItems addObject:openContainerItem];
-    [originalItems addObject:openBundleItem];
+    [modifiedItems addObject:flexItem];
+    [modifiedItems addObject:copyBundleItem];
+    [modifiedItems addObject: infoItem];
+    [modifiedItems addObject:openContainerItem];
+    [modifiedItems addObject:openBundleItem];
 
 
-    %orig(originalItems);
+    %orig(modifiedItems);
 }
 
 + (void)activateShortcut:(SBSApplicationShortcutItem *)item
