@@ -13,5 +13,4 @@ $(TWEAK_NAME)_CFLAGS += -fobjc-arc
 $(TWEAK_NAME)_FRAMEWORKS += Foundation UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-#SUBPROJECTS += 3developercc
 include $(THEOS_MAKE_PATH)/aggregate.mk
