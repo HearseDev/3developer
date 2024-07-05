@@ -10,7 +10,7 @@
 #import <SpringBoard/SBApplicationInfo.h>
 
 #import "DTAppInfoViewController.h"
-#import "NSTask.h"
+#import <NSTask.h>
 #define FLEX_BUNDLE_ID @"com.hearse.3developer.3d.flex"
 #define COPY_BUNDLE_ID @"com.hearse.3developer.3d.copy"
 #define INFO_BUNDLE_ID @"com.hearse.3developer.3d.info"
@@ -18,6 +18,8 @@
   @"com.hearse.3developer.3d.openBundleInFilza"
 #define OPEN_CONTAINER_IN_FILZA_BUNDLE_ID                                      \
   @"com.hearse.3developer.3d.openContainerInFilza"
+
+#define CHOICY_BUNDLE_ID @"com.hearse.3developer.3d.choicy"
 
 @interface SBSApplicationShortcutIcon : NSObject
 @end
