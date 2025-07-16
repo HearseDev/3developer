@@ -1,5 +1,5 @@
 # Manually specifying to use theos sdks, since we are using private frameworks.
-SDK_PATH = $(THEOS)/sdks/iPhoneOS17.2.sdk/
+SDK_PATH = $(THEOS)/sdks/iPhoneOS18.0.sdk/
 SYSROOT = $(SDK_PATH)
 
 TARGET := iphone:clang:latest:14.0
