@@ -39,10 +39,19 @@
                                               self.app.signerIdentity]];
     [self addField:[NSString stringWithFormat:@"sdkVersion: %@",
                                               self.app.sdkVersion]];
-    [self addField:[NSString stringWithFormat:@"shortVersionString: %@",
+
+    [self addField:[NSString stringWithFormat:@"bundleVersion: %@",
+                                              self.app.bundleVersion]];
+    [self addField:[NSString stringWithFormat:@"shortVersion: %@",
                                               self.app.shortVersionString]];
     [self addField:[NSString stringWithFormat:@"teamIdentifier: %@",
                                               self.app.teamIdentifier]];
+
+    [self addField:[NSString stringWithFormat:@"bundleURL: %@",
+                                              self.app.bundleURL.path]];
+    [self
+        addField:[NSString stringWithFormat:@"containerURL: %@",
+                                            self.app.bundleContainerURL.path]];
     [self
         addField:[NSString
                      stringWithFormat:@"lastModifiedDate: %@",

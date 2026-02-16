@@ -18,6 +18,23 @@ SBSApplicationShortcutItem *createShortcutItem(NSString *localizedTitle,
   return item;
 }
 
+void showErrorAlert(NSString *title, NSString *message,
+                    UIViewController *presentingVC) {
+  UIAlertController *alert =
+      [UIAlertController alertControllerWithTitle:title
+                                          message:message
+                                   preferredStyle:UIAlertControllerStyleAlert];
+
+  UIAlertAction *dismissAction =
+      [UIAlertAction actionWithTitle:@"Dismiss"
+                               style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction *action){
+                             }];
+  [alert addAction:dismissAction];
+
+  [presentingVC presentViewController:alert animated:YES completion:nil];
+}
+
 // %hook SBIconView
 void (*orig_setApplicationShortcutItems)(SBIconView *, SEL, NSArray *);
 void setApplicationShortcutItems(SBIconView *self, SEL _cmd, NSArray *arg1) {
@@ -174,6 +191,15 @@ void activateShortcut(SBIconView *self, SEL _cmd,
                             stringByAddingPercentEncodingWithAllowedCharacters:
                                 [NSCharacterSet URLQueryAllowedCharacterSet]]];
       if (app && url) {
+        if ([[objc_getClass("SpringBoard") sharedApplication] canOpenURL:url] ==
+            NO) {
+          showErrorAlert(@"Filza Not Installed",
+                         @"Filza File Manager is not installed on this device.",
+                         iconView.window.rootViewController);
+
+          return;
+        }
+
         [[objc_getClass("SpringBoard") sharedApplication]
             applicationOpenURL:url];
       }
@@ -195,6 +221,14 @@ void activateShortcut(SBIconView *self, SEL _cmd,
                             stringByAddingPercentEncodingWithAllowedCharacters:
                                 [NSCharacterSet URLQueryAllowedCharacterSet]]];
       if (app && url) {
+        if ([[objc_getClass("SpringBoard") sharedApplication] canOpenURL:url] ==
+            NO) {
+          showErrorAlert(@"Filza Not Installed",
+                         @"Filza File Manager is not installed on this device.",
+                         iconView.window.rootViewController);
+
+          return;
+        }
         [[objc_getClass("SpringBoard") sharedApplication]
             applicationOpenURL:url];
       }
@@ -231,7 +265,17 @@ void activateShortcut(SBIconView *self, SEL _cmd,
     }
   } else if ([[item type] isEqualToString:CHOICY_BUNDLE_ID] && bundleID &&
              [bundleID length] != 0) {
-    // Open Choicy
+
+    if ([[NSFileManager defaultManager]
+            fileExistsAtPath:ROOT_PATH_NS(
+                                 @"/Library/MobileSubstrate/DynamicLibraries/"
+                                 @"ChoicySB.dylib")] == NO) {
+      showErrorAlert(@"Choicy Not Installed",
+                     @"Choicy is not installed on this device.",
+                     iconView.window.rootViewController);
+      return;
+    }
+
     [[objc_getClass("SpringBoard") sharedApplication]
         applicationOpenURL:
             [NSURL

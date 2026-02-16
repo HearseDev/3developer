@@ -4,6 +4,7 @@ SYSROOT = $(SDK_PATH)
 
 TARGET := iphone:clang:latest:14.0
 INSTALL_TARGET_PROCESSES = SpringBoard
+ARCHS = arm64 arm64e
 
 include $(THEOS)/makefiles/common.mk
 
@@ -13,4 +14,5 @@ $(TWEAK_NAME)_CFLAGS += -fobjc-arc
 $(TWEAK_NAME)_FRAMEWORKS += Foundation UIKit
 
 include $(THEOS_MAKE_PATH)/tweak.mk
+SUBPROJECTS += module
 include $(THEOS_MAKE_PATH)/aggregate.mk
